@@ -1,5 +1,4 @@
 # acrosstime
-Currently running on Laravel 4.2.8.
 
 ## target environment
 Linux, Apache 2.2, PHP 5.4, MySQL 5.1  
@@ -47,24 +46,6 @@ To install `composer` globally to your `$PATH`:
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin
 
 If you change the `install-dir`, make sure the directory is in your `$PATH`.
-
-### (extra) laravel installer
-If you would like to be able to execute `laravel new` from the commandline, install the `laravel/installer` as directed in the [Laravel Installation Guide](http://laravel.com/docs/installation):
-
-    composer global require "laravel/installer=~1.1"
-
-When creating a new Laravel project, using `laravel new` is noticeably faster than fetching all the separate composer requirements for Laravel. However, it probably has no effect on performance when cloning from a git repository and running `composer install` which is what we do in this guide.
-
-### (extra) adding to `$PATH`
-After getting `laravel/installer`, edit `~/.profile` and make sure you have a line at the end like this:
-
-    export PATH="$PATH:~/.composer/vendor/bin"
-
-Make sure to:
-
-    source ~/.profile
-
-This will update your `$PATH` within the context of your open shell.
 
 ## configuration on linux
 

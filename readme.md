@@ -5,14 +5,15 @@ Linux, Apache 2.2, PHP 5.4, MySQL 5.1
 staging url: http://dev.acrossti.me/  
 production url: http://acrossti.me/  
 
-## recommended local development environment
-Ubuntu 14.04, Apache 2.2, PHP 5.5, MySQL 5.5  
-recommended local url: http://local.acrossti.me/  
+## local development environment used throughout guide
+Ubuntu 14.04, Apache 2.4, PHP 5.5, MySQL 5.5  
+local url: http://local.acrossti.me/  
 **This url is a virtualhost setup on your local development environment.**
 
 ## requirements
 * php >= 5.4
 * mcrypt php extension
+* mysql server >= 5.1
 * pdo and pdo_mysql php extensions
 * apache2
 * apache2 php5 module

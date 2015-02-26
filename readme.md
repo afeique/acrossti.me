@@ -2,9 +2,9 @@
 
 ## target environment
 Linux, Apache 2.2, PHP 5.4, MySQL 5.1  
-recommended local url: http://local.acrossti.me
-staging url: http://dev.acrossti.me/
-production url: http://acrossti.me/
+recommended local url: http://local.acrossti.me  
+staging url: http://dev.acrossti.me/  
+production url: http://acrossti.me/  
 
 ## recommended development environment
 Ubuntu 14.04, Apache 2.2, PHP 5.5, MySQL 5.5  
@@ -68,15 +68,25 @@ Enable PHP5 modules:
     sudo php5enmod mcrypt mysql pdo pdo_mysql
 
 
-### (optional) install symfony installer
+### (optional) install symfony installer globally
 
 To install the symfony installer and have the `symfony` command available 
 globally, run:
 
     curl -LsS http://symfony.com/installer > symfony.phar
     sudo mv symfony.phar /usr/local/bin/symfony
-    chmod a+x /usr/local/bin/symfony
+    sudo chmod a+x /usr/local/bin/symfony
 
+This should not be necessary unless you have a need to run 
+`symfony new <project>` to create a new symfony project.
+
+### (recommended) install composer globally
+
+It may be useful to install composer globally:
+
+    curl -sS https://getcomposer.org/installer | php
+    sudo mv composer.phar /usr/local/bin/composer
+    sudo chmod a+x /usr/local/bin/composer
 
 ### clone repo
 Clone the github repo into the directory of your choice, we're using 

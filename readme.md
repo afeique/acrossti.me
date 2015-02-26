@@ -2,13 +2,12 @@
 
 ## target environment
 Linux, Apache 2.2, PHP 5.4, MySQL 5.1  
-recommended local url: http://local.acrossti.me/  
 staging url: http://dev.acrossti.me/  
 production url: http://acrossti.me/  
 
-## recommended development environment
+## recommended local development environment
 Ubuntu 14.04, Apache 2.2, PHP 5.5, MySQL 5.5  
-development url: http://local.acrossti.me  
+recommended local url: http://local.acrossti.me/  
 **This url is a virtualhost setup on your local development environment.**
 
 ## requirements

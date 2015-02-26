@@ -122,8 +122,8 @@ we're  calling it `acrosstime-dev.conf`:
             Order allow,deny
             Allow from all
         </Directory>
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
+        ErrorLog ${APACHE_LOG_DIR}/acrosstime.error.log
+        CustomLog ${APACHE_LOG_DIR}/acrosstime.access.log combined
     </VirtualHost>
 
 Enable the new site configuration:

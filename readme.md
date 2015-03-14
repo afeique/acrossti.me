@@ -104,6 +104,12 @@ user:
     sudo chown -R $USER:www-data /var/www{,/*}
     sudo chmod -R g+rw /var/www{,/*}
 
+### /etc/hosts
+Add the following lines to `/etc/hosts`:
+
+    127.0.0.1   ldev.acrossti.me
+    127.0.0.1   l.acrossti.me
+
 ### apache virtualhost
 Enable `mod_rewrite`:
 

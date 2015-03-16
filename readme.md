@@ -12,7 +12,7 @@ local production url: http://l.acrossti.me/
 **This url is a virtualhost setup on your local development environment.**
 
 ## requirements
-* php >= 5.4
+* php >= 5.5
 * mcrypt php extension
 * mysql server >= 5.1
 * pdo and pdo_mysql php extensions
@@ -28,18 +28,13 @@ Install the required packages:
     sudo apt-get install php5 php5-mysql php5-mcrypt apache2 libapache2-mod-php5 mysql-server
 
 ### ubuntu 12.04
-You will have to add a PPA to fulfill the `php >= 5.4` requirement. 
+You will have to add a PPA to fulfill the `php >= 5.5` requirement. 
 [Ondřej Surý's PPA for PHP 5.5](https://launchpad.net/~ondrej/+archive/ubuntu/php5) 
-is recommended. If you care to match the target environment, install the 
-[oldstable PPA](https://launchpad.net/~ondrej/+archive/ubuntu/php5-oldstable). 
+is recommended. 
 
 To add the PPA for PHP 5.5:
 
     sudo add-apt-repository ppa:ondrej/php5
-
-Or the PPA for PHP 5.4 (oldstable):
-
-    sudo add-apt-repository ppa:ondrej/php5-oldstable
 
 After that:
 

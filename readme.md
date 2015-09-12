@@ -9,7 +9,7 @@ production url: http://acrossti.me/
 Ubuntu 14.04, Apache 2.4, PHP 5.5, MySQL 5.5  
 local url: http://ldev.acrossti.me/  
 local production url: http://l.acrossti.me/  
-**This url is a virtualhost setup on your local development environment.**
+**These are virtualhosts setup on your local development environment.**
 
 ## requirements
 * php >= 5.5

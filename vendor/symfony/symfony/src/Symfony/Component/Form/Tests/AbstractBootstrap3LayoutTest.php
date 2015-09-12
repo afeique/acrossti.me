@@ -231,6 +231,54 @@ abstract class AbstractBootstrap3LayoutTest extends AbstractLayoutTest
         );
     }
 
+    public function testSingleChoiceWithoutTranslation()
+    {
+        $form = $this->factory->createNamed('name', 'choice', '&a', array(
+            'choices' => array('&a' => 'Choice&A', '&b' => 'Choice&B'),
+            'multiple' => false,
+            'expanded' => false,
+            'choice_translation_domain' => false,
+        ));
+
+        $this->assertWidgetMatchesXpath($form->createView(), array('attr' => array('class' => 'my&class')),
+'/select
+    [@name="name"]
+    [@class="my&class form-control"]
+    [not(@required)]
+    [
+        ./option[@value="&a"][@selected="selected"][.="Choice&A"]
+        /following-sibling::option[@value="&b"][not(@selected)][.="Choice&B"]
+    ]
+    [count(./option)=2]
+'
+        );
+    }
+
+    public function testSingleChoiceAttributes()
+    {
+        $form = $this->factory->createNamed('name', 'choice', '&a', array(
+            'choices' => array('&a' => 'Choice&A', '&b' => 'Choice&B'),
+            'choice_attr' => array('Choice&B' => array('class' => 'foo&bar')),
+            'multiple' => false,
+            'expanded' => false,
+        ));
+
+        $classPart = in_array('choice_attr', $this->testableFeatures) ? '[@class="foo&bar"]' : '';
+
+        $this->assertWidgetMatchesXpath($form->createView(), array('attr' => array('class' => 'my&class')),
+'/select
+    [@name="name"]
+    [@class="my&class form-control"]
+    [not(@required)]
+    [
+        ./option[@value="&a"][@selected="selected"][.="[trans]Choice&A[/trans]"]
+        /following-sibling::option[@value="&b"]'.$classPart.'[not(@selected)][.="[trans]Choice&B[/trans]"]
+    ]
+    [count(./option)=2]
+'
+        );
+    }
+
     public function testSingleChoiceWithPreferred()
     {
         $form = $this->factory->createNamed('name', 'choice', '&a', array(
@@ -496,6 +544,33 @@ abstract class AbstractBootstrap3LayoutTest extends AbstractLayoutTest
         );
     }
 
+    public function testMultipleChoiceAttributes()
+    {
+        $form = $this->factory->createNamed('name', 'choice', array('&a'), array(
+            'choices' => array('&a' => 'Choice&A', '&b' => 'Choice&B'),
+            'choice_attr' => array('Choice&B' => array('class' => 'foo&bar')),
+            'required' => true,
+            'multiple' => true,
+            'expanded' => false,
+        ));
+
+        $classPart = in_array('choice_attr', $this->testableFeatures) ? '[@class="foo&bar"]' : '';
+
+        $this->assertWidgetMatchesXpath($form->createView(), array('attr' => array('class' => 'my&class')),
+'/select
+    [@name="name[]"]
+    [@class="my&class form-control"]
+    [@required="required"]
+    [@multiple="multiple"]
+    [
+        ./option[@value="&a"][@selected="selected"][.="[trans]Choice&A[/trans]"]
+        /following-sibling::option[@value="&b"]'.$classPart.'[not(@selected)][.="[trans]Choice&B[/trans]"]
+    ]
+    [count(./option)=2]
+'
+        );
+    }
+
     public function testMultipleChoiceSkipsPlaceholder()
     {
         $form = $this->factory->createNamed('name', 'choice', array('&a'), array(
@@ -569,6 +644,80 @@ abstract class AbstractBootstrap3LayoutTest extends AbstractLayoutTest
                     [.="[trans]Choice&B[/trans]"]
                     [
                         ./input[@type="radio"][@name="name"][@id="name_1"][@value="&b"][not(@checked)]
+                    ]
+            ]
+        /following-sibling::input[@type="hidden"][@id="name__token"][@class="form-control"]
+    ]
+'
+        );
+    }
+
+    public function testSingleChoiceExpandedWithoutTranslation()
+    {
+        $form = $this->factory->createNamed('name', 'choice', '&a', array(
+            'choices' => array('&a' => 'Choice&A', '&b' => 'Choice&B'),
+            'multiple' => false,
+            'expanded' => true,
+            'choice_translation_domain' => false,
+        ));
+
+        $this->assertWidgetMatchesXpath($form->createView(), array(),
+'/div
+    [
+        ./div
+            [@class="radio"]
+            [
+                ./label
+                    [.="Choice&A"]
+                    [
+                        ./input[@type="radio"][@name="name"][@id="name_0"][@value="&a"][@checked]
+                    ]
+            ]
+        /following-sibling::div
+            [@class="radio"]
+            [
+                ./label
+                    [.="Choice&B"]
+                    [
+                        ./input[@type="radio"][@name="name"][@id="name_1"][@value="&b"][not(@checked)]
+                    ]
+            ]
+        /following-sibling::input[@type="hidden"][@id="name__token"][@class="form-control"]
+    ]
+'
+        );
+    }
+
+    public function testSingleChoiceExpandedAttributes()
+    {
+        $form = $this->factory->createNamed('name', 'choice', '&a', array(
+            'choices' => array('&a' => 'Choice&A', '&b' => 'Choice&B'),
+            'choice_attr' => array('Choice&B' => array('class' => 'foo&bar')),
+            'multiple' => false,
+            'expanded' => true,
+        ));
+
+        $classPart = in_array('choice_attr', $this->testableFeatures) ? '[@class="foo&bar"]' : '';
+
+        $this->assertWidgetMatchesXpath($form->createView(), array(),
+'/div
+    [
+        ./div
+            [@class="radio"]
+            [
+                ./label
+                    [.="[trans]Choice&A[/trans]"]
+                    [
+                        ./input[@type="radio"][@name="name"][@id="name_0"][@value="&a"][@checked]
+                    ]
+            ]
+        /following-sibling::div
+            [@class="radio"]
+            [
+                ./label
+                    [.="[trans]Choice&B[/trans]"]
+                    [
+                        ./input[@type="radio"][@name="name"][@id="name_1"][@value="&b"][not(@checked)]'.$classPart.'
                     ]
             ]
         /following-sibling::input[@type="hidden"][@id="name__token"][@class="form-control"]
@@ -702,6 +851,100 @@ abstract class AbstractBootstrap3LayoutTest extends AbstractLayoutTest
         );
     }
 
+    public function testMultipleChoiceExpandedWithoutTranslation()
+    {
+        $form = $this->factory->createNamed('name', 'choice', array('&a', '&c'), array(
+            'choices' => array('&a' => 'Choice&A', '&b' => 'Choice&B', '&c' => 'Choice&C'),
+            'multiple' => true,
+            'expanded' => true,
+            'required' => true,
+            'choice_translation_domain' => false,
+        ));
+
+        $this->assertWidgetMatchesXpath($form->createView(), array(),
+'/div
+    [
+        ./div
+            [@class="checkbox"]
+            [
+                ./label
+                    [.="Choice&A"]
+                    [
+                        ./input[@type="checkbox"][@name="name[]"][@id="name_0"][@checked][not(@required)]
+                    ]
+            ]
+        /following-sibling::div
+            [@class="checkbox"]
+            [
+                ./label
+                    [.="Choice&B"]
+                    [
+                        ./input[@type="checkbox"][@name="name[]"][@id="name_1"][not(@checked)][not(@required)]
+                    ]
+            ]
+        /following-sibling::div
+            [@class="checkbox"]
+            [
+                ./label
+                    [.="Choice&C"]
+                    [
+                        ./input[@type="checkbox"][@name="name[]"][@id="name_2"][@checked][not(@required)]
+                    ]
+            ]
+        /following-sibling::input[@type="hidden"][@id="name__token"][@class="form-control"]
+    ]
+'
+        );
+    }
+
+    public function testMultipleChoiceExpandedAttributes()
+    {
+        $form = $this->factory->createNamed('name', 'choice', array('&a', '&c'), array(
+            'choices' => array('&a' => 'Choice&A', '&b' => 'Choice&B', '&c' => 'Choice&C'),
+            'choice_attr' => array('Choice&B' => array('class' => 'foo&bar')),
+            'multiple' => true,
+            'expanded' => true,
+            'required' => true,
+        ));
+
+        $classPart = in_array('choice_attr', $this->testableFeatures) ? '[@class="foo&bar"]' : '';
+
+        $this->assertWidgetMatchesXpath($form->createView(), array(),
+'/div
+    [
+        ./div
+            [@class="checkbox"]
+            [
+                ./label
+                    [.="[trans]Choice&A[/trans]"]
+                    [
+                        ./input[@type="checkbox"][@name="name[]"][@id="name_0"][@checked][not(@required)]
+                    ]
+            ]
+        /following-sibling::div
+            [@class="checkbox"]
+            [
+                ./label
+                    [.="[trans]Choice&B[/trans]"]
+                    [
+                        ./input[@type="checkbox"][@name="name[]"][@id="name_1"][not(@checked)][not(@required)]'.$classPart.'
+                    ]
+            ]
+        /following-sibling::div
+            [@class="checkbox"]
+            [
+                ./label
+                    [.="[trans]Choice&C[/trans]"]
+                    [
+                        ./input[@type="checkbox"][@name="name[]"][@id="name_2"][@checked][not(@required)]
+                    ]
+            ]
+        /following-sibling::input[@type="hidden"][@id="name__token"][@class="form-control"]
+    ]
+'
+        );
+    }
+
     public function testCountry()
     {
         $form = $this->factory->createNamed('name', 'country', 'AT');
@@ -710,7 +953,7 @@ abstract class AbstractBootstrap3LayoutTest extends AbstractLayoutTest
 '/select
     [@name="name"]
     [@class="my&class form-control"]
-    [./option[@value="AT"][@selected="selected"][.="[trans]Austria[/trans]"]]
+    [./option[@value="AT"][@selected="selected"][.="Austria"]]
     [count(./option)>200]
 '
         );
@@ -728,7 +971,7 @@ abstract class AbstractBootstrap3LayoutTest extends AbstractLayoutTest
     [@name="name"]
     [@class="my&class form-control"]
     [./option[@value=""][not(@selected)][not(@disabled)][.="[trans]Select&Country[/trans]"]]
-    [./option[@value="AT"][@selected="selected"][.="[trans]Austria[/trans]"]]
+    [./option[@value="AT"][@selected="selected"][.="Austria"]]
     [count(./option)>201]
 '
         );
@@ -1258,7 +1501,7 @@ abstract class AbstractBootstrap3LayoutTest extends AbstractLayoutTest
 '/select
     [@name="name"]
     [@class="my&class form-control"]
-    [./option[@value="de"][@selected="selected"][.="[trans]German[/trans]"]]
+    [./option[@value="de"][@selected="selected"][.="German"]]
     [count(./option)>200]
 '
         );
@@ -1272,7 +1515,7 @@ abstract class AbstractBootstrap3LayoutTest extends AbstractLayoutTest
 '/select
     [@name="name"]
     [@class="my&class form-control"]
-    [./option[@value="de_AT"][@selected="selected"][.="[trans]German (Austria)[/trans]"]]
+    [./option[@value="de_AT"][@selected="selected"][.="German (Austria)"]]
     [count(./option)>200]
 '
         );
@@ -1696,8 +1939,8 @@ abstract class AbstractBootstrap3LayoutTest extends AbstractLayoutTest
     [@class="my&class form-control"]
     [not(@required)]
     [./optgroup
-        [@label="[trans]Europe[/trans]"]
-        [./option[@value="Europe/Vienna"][@selected="selected"][.="[trans]Vienna[/trans]"]]
+        [@label="Europe"]
+        [./option[@value="Europe/Vienna"][@selected="selected"][.="Vienna"]]
     ]
     [count(./optgroup)>10]
     [count(.//option)>200]

@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.3.9",
         "symfony/http-kernel": "~2.6",
         "symfony/twig-bridge": "~2.6",
         "symfony/var-dumper": "~2.6"
@@ -32,13 +32,12 @@
         "symfony/dependency-injection": "For using as a service from the container"
     },
     "autoload": {
-        "psr-0": { "Symfony\\Bundle\\DebugBundle\\": "" }
+        "psr-4": { "Symfony\\Bundle\\DebugBundle\\": "" }
     },
-    "target-dir": "Symfony/Bundle/DebugBundle",
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.6-dev"
+            "dev-master": "2.7-dev"
         }
     }
 }

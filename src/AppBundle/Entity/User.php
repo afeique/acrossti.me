@@ -2,64 +2,89 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\AbstractEntity;
 use Doctrine\ORM\Mapping;
 
 /**
- * @Entity
- * @Table(name="users")
+ * @ORM\Entity
+ * @ORM\Table(name="users")
  */
 class User extends AbstractEntity {
     /**
-     * @Column(type="integer")
-     * @Id
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="id")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $_id;
     
     /**
-     * @Column(type="string", length="20")
+     * @ORM\Column(length="20")
      */
     protected $name;
 
     /**
-     * @Column(type="string", length="60", options={"fixed"=true})
+     * @ORM\Column(length="60", options={"fixed"=true})
      */
     protected $pass;
 
     /**
-     * @Column(type="string", length="255")
+     * @ORM\Column
      */
     protected $email;
 
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $xp;
 
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $rp;
     
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $dd;
 
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $prestige;
 
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      */
     protected $pageviews;
 
     /**
-     * @Column(type="string", length="32", options={"fixed"=true})
+     * @ORM\Column(name="reset_token", length="32", options={"fixed"=true})
      */
-    protected $reset_token;
-    
+    protected $_resetToken;
+
+    protected function randStr($len=10) {
+        $str = '';
+        for ($i=0; $i<$len; $i++) {
+            $nm = range('0','9');
+            $lc = range('a','z');
+            $uc = range('A','Z');
+            $a = array_merge($nm, $lc, $uc);
+            
+            $str .= $a[mt_rand(0, sizeof($a)-1)];
+        }
+
+        return $str;
+    }
+
+    public function setPass($p) {
+        $opt = ["cost" => 10];
+        $this->pass = password_hash($p, PASSWORD_BCRYPT, $opt);
+    }
+
+    public function verifyPass($p) {
+        return password_verify($p, $this->pass);
+    }
+
+    public function genResetToken() {
+        $this->_resetToken = md5($this->randStr());
+    }
 }

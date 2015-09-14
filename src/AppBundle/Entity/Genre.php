@@ -6,31 +6,33 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="sessions")
+ * @ORM\Table(name="genres")
  */
-class Session extends AbstractEntity {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="varchar", name="id")
-     */
+class Genre extends AbstractEntity {
     /*
     ORM\GeneratedValue strategy types:
     http://doctrine-orm.readthedocs.org/en/latest/reference/basic-mapping.html#identifier-generation-strategies
     */
+    /**
+	 * @ORM\Id
+	 * @ORM\Column(type="integer", name="id")
+	 * @ORM\GeneratedValue(strategy="AUTO")
+	 */
     protected $_id;
 
     /**
      * @ORM\Column(type="integer")
      */
-    protected $user_id;
+    protected $parent_genre_id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=30)
      */
-    protected $time;
+    protected $name;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      */
-    protected $data;
+    protected $desc;
+
 }

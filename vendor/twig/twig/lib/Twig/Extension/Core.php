@@ -536,12 +536,17 @@ function twig_date_converter(Twig_Environment $env, $date = null, $timezone = nu
         return $date;
     }
 
-    $asString = (string) $date;
-    if (ctype_digit($asString) || (!empty($asString) && '-' === $asString[0] && ctype_digit(substr($asString, 1)))) {
-        $date = '@'.$date;
+    if (null === $date || 'now' === $date) {
+        return new DateTime($date, false !== $timezone ? $timezone : $env->getExtension('core')->getTimezone());
     }
 
-    $date = new DateTime($date, $env->getExtension('core')->getTimezone());
+    $asString = (string) $date;
+    if (ctype_digit($asString) || (!empty($asString) && '-' === $asString[0] && ctype_digit(substr($asString, 1)))) {
+        $date = new DateTime('@'.$date);
+    } else {
+        $date = new DateTime($date, $env->getExtension('core')->getTimezone());
+    }
+
     if (false !== $timezone) {
         $date->setTimezone($timezone);
     }
@@ -880,6 +885,9 @@ function twig_split_filter(Twig_Environment $env, $value, $delimiter, $limit = n
 // The '_default' filter is used internally to avoid using the ternary operator
 // which costs a lot for big contexts (before PHP 5.4). So, on average,
 // a function call is cheaper.
+/**
+ * @internal
+ */
 function _twig_default_filter($value, $default = '')
 {
     if (twig_test_empty($value)) {
@@ -977,7 +985,9 @@ function twig_sort_filter($array)
     return $array;
 }
 
-/* used internally */
+/**
+ * @internal
+ */
 function twig_in_filter($value, $compare)
 {
     if (is_array($compare)) {
@@ -1145,7 +1155,9 @@ function twig_escape_filter(Twig_Environment $env, $string, $strategy = 'html', 
     }
 }
 
-/* used internally */
+/**
+ * @internal
+ */
 function twig_escape_filter_is_safe(Twig_Node $filterArgs)
 {
     foreach ($filterArgs as $arg) {
@@ -1391,7 +1403,9 @@ else {
     }
 }
 
-/* used internally */
+/**
+ * @internal
+ */
 function twig_ensure_traversable($seq)
 {
     if ($seq instanceof Traversable || is_array($seq)) {

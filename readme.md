@@ -182,7 +182,7 @@ directory.
       </Directory>
 
       ErrorLog ${APACHE_LOG_DIR}/acrosstime.error.log
-      CustomLog ${APACHE_LOG_DIR}/acrosstime.access.log combined
+      CustomLog ${APACHE_LOG_DIR}/acrosstime.access.log common
     </VirtualHost>
 
     <VirtualHost *:80>
@@ -199,7 +199,7 @@ directory.
       </Directory>
 
       ErrorLog ${APACHE_LOG_DIR}/acrosstime.error.log
-      CustomLog ${APACHE_LOG_DIR}/acrosstime.access.log combined
+      CustomLog ${APACHE_LOG_DIR}/acrosstime.access.log common
     </VirtualHost>
 
     

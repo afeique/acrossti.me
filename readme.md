@@ -421,7 +421,7 @@ SSH:
 
 ### start apache and mysql
 Open your Uniform Server Controller and start Apache and MySQL using the buttons.
-You should now be able to access
+You should now be able to access the local development and testing URLs.
 
 ### (recommended) install composer
 Go to the root directory of your Uniform Server install. From there, navigate to

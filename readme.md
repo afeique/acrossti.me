@@ -6,8 +6,8 @@ staging: http://dev.acrossti.me/
 production: http://acrossti.me/  
 
 ## local development environment covered in guide
-Ubuntu 12.04, Ubuntu 14.04, Windows 7
-Apache 2.4, PHP 5.5, MySQL 5.5
+Ubuntu 12.04, Ubuntu 14.04, Windows 7  
+Apache 2.4, PHP 5.5, MySQL 5.5  
 local development: http://ldev.acrossti.me/  
 local testing: http://l.acrossti.me/
 

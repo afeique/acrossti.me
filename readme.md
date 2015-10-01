@@ -277,7 +277,7 @@ Install to any location.
 
 
 ### setup ssh keys
-If you plan on using SSH, follow Github's directions for 
+If you plan on using git with SSH, follow Github's directions for 
 [setting up SSH keys](https://help.github.com/articles/generating-ssh-keys/).
 
 ### installation of apache, php, mysql

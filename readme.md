@@ -28,7 +28,7 @@ development.
 
 If something works in the "local development" environment, there's no reason 
 for it to fail in your "local testing" environment save server configuration 
-issues (e.g. misconfigured Apache virtual host).
+issues (e.g. misconfigured Apache virtualhost).
 
 Both "staging" and "production" environments have PHP error output suppressed 
 and Symfony running in production mode. The "staging" environment is designed 
